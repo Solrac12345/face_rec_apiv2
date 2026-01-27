@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# FastAPI / Uvicorn reload cache
+*.pid
+
+# Local data
+known_faces/*.jpg
+known_faces/*.png
+
+# TensorFlow cache
+*.pb
+*.h5
+checkpoint/
