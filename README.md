@@ -1,7 +1,7 @@
 # Face Recognition API v2  
 Multi-face detection and recognition using FastAPI + DeepFace (ArcFace)
 
-## 🇬🇧 English
+## English
 
 This project implements a clean, modular face recognition API using:
 
