@@ -1,7 +1,6 @@
 # Face Recognition API v2  
 Multi-face detection and recognition using FastAPI + DeepFace (ArcFace)
 
-## 🇬🇧 English
 
 This project implements a clean, modular face recognition API using:
 
@@ -18,13 +17,28 @@ This project implements a clean, modular face recognition API using:
 - Clean architecture (services, routes, DTOs)
 - Fully documented (EN + FR)
 
+### Problem & Solution
+
+**Problem:**
+Manual face verification is slow, error-prone, and difficult to scale across multiple people and live camera feeds.
+
+**Solution:**
+This API automates face detection and recognition using DeepFace with ArcFace embeddings, allowing fast multi-face matching from images or webcam input through a simple FastAPI interface.
+
+
 ### Run the API
 
 ```bash
 uvicorn app.main:app --reload
+```
 
-###  Run the files another terminal
+### Run the files in another terminal
+
 ```bash
 python webcam_client.py
-python enroll_gui.py 
+python enroll_gui.py
 python enroll_person.py
+```
+ ### License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
