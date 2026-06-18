@@ -2,6 +2,7 @@
 # FR-CA: Gestionnaires globaux d'exceptions avec réponses d'erreur JSON standardisées
 
 import logging
+
 from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -19,7 +20,7 @@ class ErrorResponse(BaseModel):
     details: dict | list | None = None
 
 
-class AppException(Exception):
+class AppError(Exception):  # ✅ Renamed: follows PEP8 (Exception names end with "Error")
     """EN: Custom application exception for business logic errors
     FR-CA: Exception applicative personnalisée pour les erreurs métier"""
     def __init__(self, status_code: int, code: str, message: str, details=None):
@@ -29,7 +30,7 @@ class AppException(Exception):
         self.details = details
 
 
-async def app_exception_handler(request: Request, exc: AppException) -> JSONResponse:
+async def app_exception_handler(request: Request, exc: AppError) -> JSONResponse:  # ✅ Updated type hint
     return JSONResponse(
         status_code=exc.status_code,
         content=ErrorResponse(code=exc.code, message=exc.message, details=exc.details).model_dump()
@@ -53,10 +54,10 @@ async def http_exception_handler(request: Request, exc: Exception) -> JSONRespon
     FR-CA: Interception globale pour HTTPException FastAPI"""
     status_code = getattr(exc, "status_code", 500)
     detail = getattr(exc, "detail", "Internal server error")
-    
+
     if status_code >= 500:
         logger.error(f"Unhandled {status_code} on {request.url}: {detail}")
-        
+
     return JSONResponse(
         status_code=status_code,
         content=ErrorResponse(

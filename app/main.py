@@ -3,20 +3,22 @@
 
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends, Request
+
+from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
+
 from app.config import Settings, get_settings
 
 # EN: Import all exception handlers
 # FR-CA: Importer tous les gestionnaires d'exceptions
 from app.exceptions import (
-    AppException,
+    AppError,
     app_exception_handler,
+    http_exception_handler,
     validation_exception_handler,
-    http_exception_handler
 )
 
 # EN: Module-level logger (standard Python pattern)
@@ -48,18 +50,18 @@ def create_app() -> FastAPI:
     """EN: Application factory pattern for testability and config injection
     FR-CA: Patron de fabrique d'application pour la testabilité et l'injection de config"""
     settings = get_settings()
-    
+
     app = FastAPI(
         title=settings.app_name,
         version=settings.app_version,
         debug=settings.debug,
         lifespan=lifespan,
         docs_url="/docs" if settings.debug else None,
-        redoc_url="/redoc" if settings.debug else None
+        redoc_url="/redoc" if settings.debug else None,
     )
 
     # 🔒 Register structured error handlers (order matters: specific → general)
-    app.add_exception_handler(AppException, app_exception_handler)
+    app.add_exception_handler(AppError, app_exception_handler)  # ✅ Updated: AppException → AppError
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(Exception, http_exception_handler)  # Catch-all fallback
 

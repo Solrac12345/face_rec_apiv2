@@ -3,10 +3,12 @@
 
 import hmac
 import logging
-from fastapi import Depends, HTTPException, Security, status
-from fastapi.security import APIKeyHeader, HTTPBearer, HTTPAuthorizationCredentials
+
 import jwt
+from fastapi import Depends, HTTPException, Security, status
+from fastapi.security import APIKeyHeader, HTTPAuthorizationCredentials, HTTPBearer
 from jwt.exceptions import InvalidTokenError
+
 from app.config import Settings, get_settings
 
 logger = logging.getLogger(__name__)
@@ -44,7 +46,7 @@ async def verify_auth(
             return {"auth_type": "jwt", "subject": payload.get("sub", "unknown")}
         except InvalidTokenError as e:
             logger.warning(f"JWT validation failed: {e}")
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or expired token")
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or expired token") from e
 
     # 3️⃣ Dev mode: allow anonymous if neither secret is configured
     if not settings.api_key and not settings.jwt_secret_key:
