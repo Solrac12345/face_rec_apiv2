@@ -3,11 +3,11 @@
 
 import asyncio
 import logging
-from pathlib import Path
-from typing import List, Tuple
+
 import cv2
 import numpy as np
 from deepface import DeepFace
+
 from app.config import Settings
 
 logger = logging.getLogger(__name__)
@@ -45,15 +45,15 @@ class FaceService:
                         model_name=self.settings.embedding_model,
                         enforce_detection=False
                     )
-                    
+
                     # EN: Robust embedding extraction for DeepFace API variations
                     # FR-CA: Extraction robuste d'embedding pour les variations d'API DeepFace
                     if not result or len(result) == 0:
                         logger.warning(f"No embedding returned for {img_path}")
                         continue
-                    
+
                     embedding_data = result[0]
-                    
+
                     # Handle dict format: {"embedding": [...], "face_confidence": 0.99}
                     if isinstance(embedding_data, dict) and "embedding" in embedding_data:
                         embedding = embedding_data["embedding"]
@@ -67,24 +67,24 @@ class FaceService:
                     else:
                         logger.warning(f"Unknown embedding format for {img_path}: {type(embedding_data)}")
                         continue
-                    
+
                     # Convert to numpy array and validate dimensionality
                     embedding_array = np.array(embedding, dtype=np.float32)
                     if embedding_array.ndim != 1:
                         logger.warning(f"Unexpected embedding shape for {img_path}: {embedding_array.shape}")
                         continue
-                        
+
                     self.known_embeddings[label] = embedding_array
                     logger.info(f"Loaded known face: {label} ({len(embedding_array)}-dim embedding)")
-                    
+
                 except Exception as e:
                     logger.error(f"Failed to load {img_path}: {type(e).__name__}: {e}")
 
-    async def detect_faces_async(self, image: np.ndarray) -> List[Tuple[int, int, int, int]]:
+    async def detect_faces_async(self, image: np.ndarray) -> list[tuple[int, int, int, int]]:
         """Non-blocking face detection using thread pool."""
         return await asyncio.to_thread(self._detect_faces_sync, image)
 
-    def _detect_faces_sync(self, image: np.ndarray) -> List[Tuple[int, int, int, int]]:
+    def _detect_faces_sync(self, image: np.ndarray) -> list[tuple[int, int, int, int]]:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         faces = self.detector.detectMultiScale(
             gray, scaleFactor=1.1, minNeighbors=5,
@@ -150,7 +150,7 @@ class FaceService:
         """CPU-bound cosine distance computation."""
         norm_q = np.linalg.norm(query)
         if norm_q == 0:
-            return {lbl: 1.0 for lbl in self.known_embeddings}
+            return dict.fromkeys(self.known_embeddings, 1.0)
         return {
             lbl: float(1.0 - np.dot(query, emb) / (norm_q * np.linalg.norm(emb)))
             for lbl, emb in self.known_embeddings.items()

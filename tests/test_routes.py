@@ -1,10 +1,11 @@
 # EN: Async integration tests for face API routes
 # FR-CA: Tests d'intégration async pour les routes API faciales
 
-import pytest
-from unittest.mock import patch, MagicMock, AsyncMock
-import numpy as np
 from io import BytesIO
+from unittest.mock import patch
+
+import numpy as np
+import pytest
 
 
 @pytest.mark.asyncio
@@ -29,7 +30,7 @@ async def test_detect_invalid_content_type(client):
     )
     assert response.status_code == 400
     data = response.json()
-    
+
     # EN: Check structured error format (code OR message field)
     # FR-CA: Vérifier le format d'erreur structuré (champ code OU message)
     error_msg = data.get("message") or data.get("detail", "")
@@ -47,12 +48,12 @@ async def test_recognize_mock_success(client):
         b"\x00\x01\x01\x00\x05\x18\xd8N\x00\x00\x00\x00IEND\xaeB`\x82"
     )
     mock_png.name = "test.png"
-    
+
     # EN: Mock the service layer to avoid actual ML inference
     # FR-CA: Simuler la couche service pour éviter l'inférence ML réelle
     with patch("app.routes.face_routes._validate_upload") as mock_val, \
          patch("app.services.face_service.FaceService.recognize_faces_async") as mock_rec:
-        
+
         mock_val.return_value = np.zeros((100, 100, 3), dtype=np.uint8)
         mock_rec.return_value = {
             "recognized": [{
@@ -62,12 +63,12 @@ async def test_recognize_mock_success(client):
             }],
             "unknown_faces": 0
         }
-        
+
         response = await client.post(
             "/face/recognize",
             files={"file": ("test.png", mock_png, "image/png")}
         )
-        
+
         assert response.status_code == 200
         data = response.json()
         assert len(data["recognized"]) == 1
@@ -83,15 +84,15 @@ async def test_auth_bypass_dev_mode(client):
     # FR-CA: Simuler la validation de téléversement pour éviter le parsing d'image réel
     with patch("app.routes.face_routes._validate_upload") as mock_val, \
          patch("app.services.face_service.FaceService.detect_faces_async") as mock_detect:
-        
+
         mock_val.return_value = np.zeros((100, 100, 3), dtype=np.uint8)
         mock_detect.return_value = [(10, 10, 50, 50)]  # Mock one face box
-        
+
         response = await client.post(
             "/face/detect",
             files={"file": ("test.jpg", b"mocked", "image/jpeg")}
         )
-        
+
         # EN: Should NOT be 401 in dev mode (auth bypassed)
         # FR-CA: Ne devrait PAS être 401 en mode dev (auth contournée)
         assert response.status_code != 401

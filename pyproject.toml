@@ -1,71 +1,25 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "face-rec-apiv2"
-version = "0.1.0"
-description = "Face Recognition API v2 - Production-grade multi-face detection & recognition"
-readme = "README.md"
-requires-python = ">=3.10"
-license = {text = "MIT"}
-authors = [{name = "Your Name", email = "you@example.com"}]
-
-# EN: Core runtime dependencies
-# FR-CA: Dépendances d'exécution principales
-dependencies = [
-    "fastapi>=0.128.0",
-    "uvicorn>=0.40.0",
-    "pydantic>=2.12.0",
-    "pydantic-settings>=2.12.0",
-    "python-dotenv>=1.0.0",
-    "deepface>=0.0.75",
-    "opencv-python>=4.11.0",
-    "numpy>=1.23.0",
-    "pillow>=10.0.0",
-    "python-multipart>=0.0.22",
-    "PyJWT>=2.8.0",
-    "cryptography>=46.0.0",
-]
-
-# EN: Development & CI dependencies
-# FR-CA: Dépendances de développement et CI
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0.0",
-    "pytest-asyncio>=0.23.0",
-    "httpx>=0.27.0",
-    "pytest-cov>=4.1.0",
-    "ruff>=0.3.0",
-    "bandit>=1.7.0",
-]
-
-# EN: Explicit package discovery - only include 'app' and 'tests'
-# FR-CA: Découverte explicite des packages - inclure seulement 'app' et 'tests'
-[tool.setuptools.packages.find]
-include = ["app*", "tests*"]
-exclude = ["data*", "responses*", "known_faces*", "playground*"]
-
-# EN: Pytest configuration
-# FR-CA: Configuration pytest
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-testpaths = ["tests"]
-pythonpath = ["."]
-addopts = [
-    "--verbose",
-    "--cov=app",
-    "--cov-report=term-missing",
-    "--cov-report=html:htmlcov",
-]
-
-# EN: Ruff linting config (optional but recommended)
-# FR-CA: Configuration de linting Ruff (optionnel mais recommandé)
+# EN: Ruff linting config (updated for v0.3+ syntax)
+# FR-CA: Configuration de linting Ruff (mise à jour pour syntaxe v0.3+)
 [tool.ruff]
 line-length = 100
 target-version = "py310"
-select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
-ignore = ["E501"]  # Let ruff handle line length
 
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]  # Allow unused imports in __init__
+[tool.ruff.lint]
+# EN: Enable these rule categories
+# FR-CA: Activer ces catégories de règles
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+# EN: Ignore line-length (handled by formatter)
+# FR-CA: Ignorer la longueur de ligne (gérée par le formateur)
+ignore = ["E501"]
+# EN: FastAPI-specific patterns that are intentional, not bugs
+# FR-CA: Patterns FastAPI spécifiques qui sont intentionnels, pas des bugs
+extend-ignore = [
+    "B008",  # Depends/Security/File in defaults is standard FastAPI pattern
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]           # Allow unused imports in __init__
+"app/auth.py" = ["B008"]           # FastAPI auth dependency patterns
+"app/routes/*.py" = ["B008"]       # FastAPI route dependency patterns  
+"app/main.py" = ["B008"]           # FastAPI app factory patterns
+"tests/**/*.py" = ["S101", "S105"] # Allow asserts & hardcoded test values
