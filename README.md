@@ -1,4 +1,4 @@
-﻿# Face Recognition API v2
+# Face Recognition API v2
 
 Multi-face detection and recognition using FastAPI + DeepFace (ArcFace).
 
