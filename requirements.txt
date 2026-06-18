@@ -10,6 +10,7 @@ python-dotenv==1.2.1
 
 # Face Recognition & Vision
 deepface==0.0.75
+tensorflow>=2.14.0,<2.15.0
 opencv-python==4.11.0.86
 numpy>=1.26.0
 pillow==12.1.0
