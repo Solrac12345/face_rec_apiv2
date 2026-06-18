@@ -1,21 +1,23 @@
-# Face Recognition API v2  
-Multi-face detection and recognition using FastAPI + DeepFace (ArcFace)
+﻿# Face Recognition API v2
 
+Multi-face detection and recognition using FastAPI + DeepFace (ArcFace).
 
-This project implements a clean, modular face recognition API using:
+## English
+
+This project implements a modular face recognition API using:
 
 - FastAPI
-- DeepFace (ArcFace model, 512‑dim embeddings)
+- DeepFace (ArcFace model, 512-dimensional embeddings)
 - OpenCV (face detection)
 - Python 3.10
 
 ### Features
+
 - Multi-face detection
 - Multi-face recognition
 - Embedding database from `known_faces/`
-- Webcam client for real-time recognition
+- Webcam-based recognition demo
 - Clean architecture (services, routes, DTOs)
-- Fully documented (EN + FR)
 
 ### Problem & Solution
 
@@ -23,8 +25,7 @@ This project implements a clean, modular face recognition API using:
 Manual face verification is slow, error-prone, and difficult to scale across multiple people and live camera feeds.
 
 **Solution:**
-This API automates face detection and recognition using DeepFace with ArcFace embeddings, allowing fast multi-face matching from images or webcam input through a simple FastAPI interface.
-
+This API automates face detection and recognition with DeepFace and ArcFace embeddings, allowing fast matching from uploaded images or webcam input through a simple FastAPI interface.
 
 ### Run the API
 
@@ -32,13 +33,16 @@ This API automates face detection and recognition using DeepFace with ArcFace em
 uvicorn app.main:app --reload
 ```
 
-### Run the files in another terminal
+### Run the demo scripts from another terminal
 
 ```bash
-python webcam_client.py
-python enroll_gui.py
-python enroll_person.py
+python responses/webcam_client.py
+python responses/enroll_gui.py
+python responses/enroll_person.py
 ```
- ### License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+### API endpoints
+
+- `POST /face/detect` — detect faces in an uploaded image
+- `POST /face/recognize` — recognize faces in an uploaded image
+- `GET /health` — health check
