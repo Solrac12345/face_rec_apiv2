@@ -25,8 +25,7 @@ extend-ignore = [
 "tests/**/*.py" = ["S101", "S105"] # Allow asserts & hardcoded test values
 
 [tool.pytest.ini_options]
-asyncio_mode = "strict"
-asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"  # ✅ Auto mode works reliably with 0.21.2
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = [
