@@ -43,7 +43,7 @@ class FaceService:
                     result = DeepFace.represent(
                         str(img_path),
                         model_name=self.settings.embedding_model,
-                        enforce_detection=False
+                        enforce_detection=False,
                     )
 
                     # EN: Robust embedding extraction for DeepFace API variations
@@ -54,28 +54,34 @@ class FaceService:
 
                     embedding_data = result[0]
 
-                    # Handle dict format: {"embedding": [...], "face_confidence": 0.99}
+                    # EN: Handle dict format: {"embedding": [...], "face_confidence": 0.99}
+                    # FR-CA: Gérer le format dict: {"embedding": [...], "face_confidence": 0.99}
                     if isinstance(embedding_data, dict) and "embedding" in embedding_data:
                         embedding = embedding_data["embedding"]
-                    # Handle direct list/array format
-                    elif isinstance(embedding_data, (list, np.ndarray)):
+                    # Handle direct list/array format — use modern union syntax
+                    elif isinstance(
+                        embedding_data, list | np.ndarray
+                    ):  # ✅ Changed (list, np.ndarray) → list | np.ndarray
                         embedding = embedding_data
                     # Handle scalar/float (edge case - skip)
-                    elif isinstance(embedding_data, (int, float)):
+                    elif isinstance(
+                        embedding_data, int | float
+                    ):  # ✅ Changed (int, float) → int | float
                         logger.warning(f"Unexpected scalar embedding for {img_path}")
-                        continue
-                    else:
-                        logger.warning(f"Unknown embedding format for {img_path}: {type(embedding_data)}")
                         continue
 
                     # Convert to numpy array and validate dimensionality
                     embedding_array = np.array(embedding, dtype=np.float32)
                     if embedding_array.ndim != 1:
-                        logger.warning(f"Unexpected embedding shape for {img_path}: {embedding_array.shape}")
+                        logger.warning(
+                            f"Unexpected embedding shape for {img_path}: {embedding_array.shape}"
+                        )
                         continue
 
                     self.known_embeddings[label] = embedding_array
-                    logger.info(f"Loaded known face: {label} ({len(embedding_array)}-dim embedding)")
+                    logger.info(
+                        f"Loaded known face: {label} ({len(embedding_array)}-dim embedding)"
+                    )
 
                 except Exception as e:
                     logger.error(f"Failed to load {img_path}: {type(e).__name__}: {e}")
@@ -87,8 +93,7 @@ class FaceService:
     def _detect_faces_sync(self, image: np.ndarray) -> list[tuple[int, int, int, int]]:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         faces = self.detector.detectMultiScale(
-            gray, scaleFactor=1.1, minNeighbors=5,
-            minSize=(self.min_face_size, self.min_face_size)
+            gray, scaleFactor=1.1, minNeighbors=5, minSize=(self.min_face_size, self.min_face_size)
         )
         return [(int(x), int(y), int(w), int(h)) for x, y, w, h in faces]
 
@@ -99,13 +104,13 @@ class FaceService:
         unknown_count = 0
 
         for x, y, w, h in boxes:
-            face_crop = image[y:y+h, x:x+w]
+            face_crop = image[y : y + h, x : x + w]
             try:
                 result = await asyncio.to_thread(
                     DeepFace.represent,
                     face_crop,
                     model_name=self.settings.embedding_model,
-                    enforce_detection=False
+                    enforce_detection=False,
                 )
                 if not result or len(result) == 0:
                     unknown_count += 1
@@ -113,29 +118,30 @@ class FaceService:
 
                 # EN: Robust query embedding extraction (same logic as _load_known_faces_sync)
                 # FR-CA: Extraction robuste d'embedding de requête (même logique que _load_known_faces_sync)
-                embedding_data = result[0]
+                embedding_data = result[0]  # ✅ FIXED: Extract from result first!
+
                 if isinstance(embedding_data, dict) and "embedding" in embedding_data:
                     query_embedding = np.array(embedding_data["embedding"], dtype=np.float32)
-                elif isinstance(embedding_data, (list, np.ndarray)):
+                elif isinstance(embedding_data, list | np.ndarray):  # ✅ Modern union syntax
                     query_embedding = np.array(embedding_data, dtype=np.float32)
                 else:
                     logger.warning(f"Unexpected query embedding format: {type(embedding_data)}")
                     unknown_count += 1
                     continue
 
-                distances = await asyncio.to_thread(
-                    self._compute_distances, query_embedding
-                )
+                distances = await asyncio.to_thread(self._compute_distances, query_embedding)
 
                 if distances:
                     best_label, min_dist = min(distances.items(), key=lambda item: item[1])
                     if min_dist <= self.threshold:
                         confidence = max(0.0, 1.0 - min_dist) * 100
-                        recognized.append({
-                            "label": best_label,
-                            "confidence": round(confidence, 2),
-                            "box": {"x": x, "y": y, "width": w, "height": h}
-                        })
+                        recognized.append(
+                            {
+                                "label": best_label,
+                                "confidence": round(confidence, 2),
+                                "box": {"x": x, "y": y, "width": w, "height": h},
+                            }
+                        )
                     else:
                         unknown_count += 1
                 else:

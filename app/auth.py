@@ -22,7 +22,7 @@ bearer_scheme = HTTPBearer(auto_error=False)
 async def verify_auth(
     api_key: str | None = Security(api_key_header),
     credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme),
-    settings: Settings = Depends(get_settings)
+    settings: Settings = Depends(get_settings),
 ) -> dict:
     """
     EN: Validate API Key or JWT. Returns auth context dict.
@@ -41,12 +41,14 @@ async def verify_auth(
                 credentials.credentials,
                 settings.jwt_secret_key,
                 algorithms=[settings.jwt_algorithm],
-                options={"verify_exp": True}
+                options={"verify_exp": True},
             )
             return {"auth_type": "jwt", "subject": payload.get("sub", "unknown")}
         except InvalidTokenError as e:
             logger.warning(f"JWT validation failed: {e}")
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or expired token") from e
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Invalid or expired token"
+            ) from e
 
     # 3️⃣ Dev mode: allow anonymous if neither secret is configured
     if not settings.api_key and not settings.jwt_secret_key:

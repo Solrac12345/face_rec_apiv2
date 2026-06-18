@@ -25,8 +25,7 @@ async def test_detect_invalid_content_type(client):
     """EN: Reject non-image file uploads with 400
     FR-CA: Rejeter les téléversements non-image avec 400"""
     response = await client.post(
-        "/face/detect",
-        files={"file": ("test.txt", b"not an image", "text/plain")}
+        "/face/detect", files={"file": ("test.txt", b"not an image", "text/plain")}
     )
     assert response.status_code == 400
     data = response.json()
@@ -35,6 +34,7 @@ async def test_detect_invalid_content_type(client):
     # FR-CA: Vérifier le format d'erreur structuré (champ code OU message)
     error_msg = data.get("message") or data.get("detail", "")
     assert "Unsupported image format" in str(error_msg) or "HTTP_400" in data.get("code", "")
+
 
 @pytest.mark.asyncio
 async def test_recognize_mock_success(client):
@@ -51,22 +51,24 @@ async def test_recognize_mock_success(client):
 
     # EN: Mock the service layer to avoid actual ML inference
     # FR-CA: Simuler la couche service pour éviter l'inférence ML réelle
-    with patch("app.routes.face_routes._validate_upload") as mock_val, \
-         patch("app.services.face_service.FaceService.recognize_faces_async") as mock_rec:
-
+    with (
+        patch("app.routes.face_routes._validate_upload") as mock_val,
+        patch("app.services.face_service.FaceService.recognize_faces_async") as mock_rec,
+    ):
         mock_val.return_value = np.zeros((100, 100, 3), dtype=np.uint8)
         mock_rec.return_value = {
-            "recognized": [{
-                "label": "test_person",
-                "confidence": 98.5,
-                "box": {"x": 10, "y": 10, "width": 50, "height": 50}
-            }],
-            "unknown_faces": 0
+            "recognized": [
+                {
+                    "label": "test_person",
+                    "confidence": 98.5,
+                    "box": {"x": 10, "y": 10, "width": 50, "height": 50},
+                }
+            ],
+            "unknown_faces": 0,
         }
 
         response = await client.post(
-            "/face/recognize",
-            files={"file": ("test.png", mock_png, "image/png")}
+            "/face/recognize", files={"file": ("test.png", mock_png, "image/png")}
         )
 
         assert response.status_code == 200
@@ -82,15 +84,15 @@ async def test_auth_bypass_dev_mode(client):
     FR-CA: Vérifier que l'auth est contournée quand aucun secret n'est configuré (mode dev)"""
     # EN: Mock the upload validation to avoid actual image parsing
     # FR-CA: Simuler la validation de téléversement pour éviter le parsing d'image réel
-    with patch("app.routes.face_routes._validate_upload") as mock_val, \
-         patch("app.services.face_service.FaceService.detect_faces_async") as mock_detect:
-
+    with (
+        patch("app.routes.face_routes._validate_upload") as mock_val,
+        patch("app.services.face_service.FaceService.detect_faces_async") as mock_detect,
+    ):
         mock_val.return_value = np.zeros((100, 100, 3), dtype=np.uint8)
         mock_detect.return_value = [(10, 10, 50, 50)]  # Mock one face box
 
         response = await client.post(
-            "/face/detect",
-            files={"file": ("test.jpg", b"mocked", "image/jpeg")}
+            "/face/detect", files={"file": ("test.jpg", b"mocked", "image/jpeg")}
         )
 
         # EN: Should NOT be 401 in dev mode (auth bypassed)

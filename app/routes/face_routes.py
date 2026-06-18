@@ -38,7 +38,7 @@ async def detect_faces(
     file: UploadFile = File(...),
     service: FaceService = Depends(get_face_service),
     settings: Settings = Depends(get_settings),
-    auth: dict = Depends(verify_auth)
+    auth: dict = Depends(verify_auth),
 ):
     image = _validate_upload(file, settings.max_upload_size_mb)
     boxes = await service.detect_faces_async(image)
@@ -50,13 +50,15 @@ async def recognize_faces(
     file: UploadFile = File(...),
     service: FaceService = Depends(get_face_service),
     settings: Settings = Depends(get_settings),
-    auth: dict = Depends(verify_auth)
+    auth: dict = Depends(verify_auth),
 ):
     image = _validate_upload(file, settings.max_upload_size_mb)
     result = await service.recognize_faces_async(image)
 
     recognized_faces = [
-        RecognizedFace(label=item["label"], confidence=item["confidence"], box=FaceBox(**item["box"]))
+        RecognizedFace(
+            label=item["label"], confidence=item["confidence"], box=FaceBox(**item["box"])
+        )
         for item in result["recognized"]
     ]
 

@@ -42,6 +42,7 @@ def app(override_settings):
     # EN: Inject test settings
     # FR-CA: Injecter les paramètres de test
     import app.config
+
     app.config.get_settings = override_settings
     return create_app()
 

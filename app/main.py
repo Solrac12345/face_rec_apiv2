@@ -61,7 +61,9 @@ def create_app() -> FastAPI:
     )
 
     # 🔒 Register structured error handlers (order matters: specific → general)
-    app.add_exception_handler(AppError, app_exception_handler)  # ✅ Updated: AppException → AppError
+    app.add_exception_handler(
+        AppError, app_exception_handler
+    )  # ✅ Updated: AppException → AppError
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(Exception, http_exception_handler)  # Catch-all fallback
 
@@ -79,6 +81,7 @@ def create_app() -> FastAPI:
     # EN: Register routes
     # FR-CA: Enregistrement des routes
     from app.routes import face_routes
+
     app.include_router(face_routes.router, prefix="/face", tags=["face"])
 
     # EN: Health check endpoint

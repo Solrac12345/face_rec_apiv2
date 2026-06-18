@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 class ErrorResponse(BaseModel):
     """EN: Standardized error payload for all API failures
     FR-CA: Charge utile d'erreur standardisée pour toutes les défaillances API"""
+
     status: str = "error"
     code: str
     message: str
@@ -23,6 +24,7 @@ class ErrorResponse(BaseModel):
 class AppError(Exception):  # ✅ Renamed: follows PEP8 (Exception names end with "Error")
     """EN: Custom application exception for business logic errors
     FR-CA: Exception applicative personnalisée pour les erreurs métier"""
+
     def __init__(self, status_code: int, code: str, message: str, details=None):
         self.status_code = status_code
         self.code = code
@@ -30,22 +32,24 @@ class AppError(Exception):  # ✅ Renamed: follows PEP8 (Exception names end wit
         self.details = details
 
 
-async def app_exception_handler(request: Request, exc: AppError) -> JSONResponse:  # ✅ Updated type hint
+async def app_exception_handler(
+    request: Request, exc: AppError
+) -> JSONResponse:  # ✅ Updated type hint
     return JSONResponse(
         status_code=exc.status_code,
-        content=ErrorResponse(code=exc.code, message=exc.message, details=exc.details).model_dump()
+        content=ErrorResponse(code=exc.code, message=exc.message, details=exc.details).model_dump(),
     )
 
 
-async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
     logger.debug(f"Validation error on {request.url}: {exc.errors()}")
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content=ErrorResponse(
-            code="VALIDATION_ERROR",
-            message="Invalid request payload",
-            details=exc.errors()
-        ).model_dump()
+            code="VALIDATION_ERROR", message="Invalid request payload", details=exc.errors()
+        ).model_dump(),
     )
 
 
@@ -61,8 +65,6 @@ async def http_exception_handler(request: Request, exc: Exception) -> JSONRespon
     return JSONResponse(
         status_code=status_code,
         content=ErrorResponse(
-            code=f"HTTP_{status_code}",
-            message=str(detail),
-            details=None
-        ).model_dump()
+            code=f"HTTP_{status_code}", message=str(detail), details=None
+        ).model_dump(),
     )

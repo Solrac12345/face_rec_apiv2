@@ -45,10 +45,7 @@ class Settings(BaseSettings):
     # EN: Pydantic-settings config: load from .env file and environment
     # FR-CA: Configuration pydantic-settings: chargement depuis fichier .env et environnement
     model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        case_sensitive=False,
-        extra="ignore"
+        env_file=".env", env_file_encoding="utf-8", case_sensitive=False, extra="ignore"
     )
 
 
