@@ -42,4 +42,4 @@ checkpoint/
   # TensorFlow cache
   *.pb
   *.h5
-  checkpoint/
+  checkpoint/.env
