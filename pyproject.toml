@@ -23,3 +23,16 @@ extend-ignore = [
 "app/routes/*.py" = ["B008"]       # FastAPI route dependency patterns  
 "app/main.py" = ["B008"]           # FastAPI app factory patterns
 "tests/**/*.py" = ["S101", "S105"] # Allow asserts & hardcoded test values
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = [
+    "--verbose",
+    "--cov=app",
+    "--cov-report=xml",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+]
