@@ -31,3 +31,15 @@ known_faces/*.png
 *.pb
 *.h5
 checkpoint/
+
+  # Local data
+  known_faces/*.jpg
+  known_faces/*.png
+
++ # Environment & secrets
++ .env
+
+  # TensorFlow cache
+  *.pb
+  *.h5
+  checkpoint/

@@ -1,80 +1,334 @@
-absl-py==2.3.1
-annotated-doc==0.0.4
-annotated-types==0.7.0
-anyio==4.12.1
-astunparse==1.6.3
-beautifulsoup4==4.14.3
-blinker==1.9.0
-certifi==2026.1.4
-cffi==2.0.0
-charset-normalizer==3.4.4
-click==8.3.1
-colorama==0.4.6
-cryptography==46.0.3
-deepface==0.0.75
-exceptiongroup==1.3.1
-fastapi==0.128.0
-filelock==3.20.3
-fire==0.7.1
-Flask==3.1.2
-flatbuffers==25.12.19
-gast==0.4.0
-gdown==5.2.1
-google-auth==2.48.0
-google-auth-oauthlib==0.4.6
-google-pasta==0.2.0
-grpcio==1.76.0
-h11==0.16.0
-h5py==3.15.1
-idna==3.11
-itsdangerous==2.2.0
-Jinja2==3.1.6
-joblib==1.5.3
-keras==2.11.0
-libclang==18.1.1
-lz4==4.4.5
-Markdown==3.10.1
-MarkupSafe==3.0.3
-mtcnn==1.0.0
-numpy==1.23.5
-oauthlib==3.3.1
-opencv-python==4.11.0.86
-opt_einsum==3.4.0
-packaging==26.0
-pandas==2.3.3
-pillow==12.1.0
-protobuf==3.19.6
-pyasn1==0.6.2
-pyasn1_modules==0.4.2
-pycparser==3.0
-pydantic==2.12.5
-pydantic-settings==2.12.0
-pydantic_core==2.41.5
-PySocks==1.7.1
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
-python-multipart==0.0.22
-pytz==2025.2
-requests==2.32.5
-requests-oauthlib==2.0.0
-retina-face==0.0.17
-rsa==4.9.1
-six==1.17.0
-soupsieve==2.8.3
-starlette==0.50.0
-tensorboard==2.11.2
-tensorboard-data-server==0.6.1
-tensorboard-plugin-wit==1.8.1
-tensorflow==2.11.0
-tensorflow-estimator==2.11.0
-tensorflow-intel==2.11.0
-tensorflow-io-gcs-filesystem==0.31.0
-termcolor==3.3.0
-tqdm==4.67.1
-typing-inspection==0.4.2
-typing_extensions==4.15.0
-tzdata==2025.3
-urllib3==2.6.3
-uvicorn==0.40.0
-Werkzeug==3.1.5
-wrapt==2.0.1
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carlos Tamayo | AI Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#10b981",
+            "background-light": "#f5f7f8",
+            "background-dark": "#101722",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Manrope', sans-serif;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .ai-glow {
+      box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary/30">
+<!-- Floating Header -->
+<header class="fixed top-0 left-0 right-0 z-50 px-4 py-3">
+<nav class="max-w-5xl mx-auto flex items-center justify-between glass-card rounded-full px-6 py-2 shadow-lg">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">CT</div>
+<span class="font-bold tracking-tight hidden sm:block">Carlos Tamayo</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1 text-xs font-bold bg-background-dark/50 dark:bg-white/10 rounded-full p-1">
+<button class="px-3 py-1 rounded-full bg-primary text-white">EN</button>
+<button class="px-3 py-1 rounded-full text-slate-400 hover:text-white transition-colors">FR</button>
+</div>
+<a class="material-symbols-outlined text-primary scale-110" href="#contact">alternate_email</a>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-32 max-w-5xl mx-auto px-4 space-y-24">
+<!-- Hero Section -->
+<section class="relative py-12 @container">
+<div class="absolute -top-24 -left-24 size-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute top-48 -right-24 size-80 rounded-full blur-[100px] pointer-events-none bg-emerald-500/5"></div>
+<div class="flex flex-col items-center text-center gap-8 relative z-10">
+<div class="relative">
+<div class="size-32 @[480px]:size-40 rounded-full p-1 bg-gradient-to-tr ai-glow from-emerald-400 to-primary">
+<div class="size-full rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of Carlos Tamayo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXopfn5htGQBejjjq9Chvi5RemgRupiPIpF3SqrtuxMFI9BMAbLbLohocWBE2E19o_dUO2Hwh7KK6n6_eHNhNK3GZIdeJFEH7I5iD5LGO8HuDbUAjqN5-03TySOI9opTigmMx2w36g0XdowoSu-UCIXdJpXkRBiz2eWQ6TWfyx6juzVzrMZj88XUPyt-I48kF6UEbi_YGpnAilppSyl8yFsScKulWD7Qo1oDon2RTRwwtOKS26EUOxq6i9pwLvWzR7AdCejyw_JYXz"/>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 size-6 bg-green-500 rounded-full border-4 border-background-dark"></div>
+</div>
+<div class="space-y-4 max-w-3xl">
+<h1 class="text-4xl @[480px]:text-6xl font-extrabold tracking-tight leading-[1.1]">
+            Turning Ideas Into Scalable, <span class="text-primary">Real‑World Systems</span>
+</h1>
+<p class="text-lg text-slate-400 font-medium">
+            Python • Serverless • Machine Learning • Automation
+          </p>
+</div>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+            View Projects <span class="material-symbols-outlined text-sm">arrow_downward</span>
+</button>
+<button class="glass-card hover:bg-white/5 text-white font-bold py-3 px-8 rounded-xl transition-all flex items-center gap-2 border border-white/10">
+            Resume <span class="material-symbols-outlined text-sm">description</span>
+</button>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-xs">person</span> About Me
+        </div>
+<h2 class="text-3xl font-bold">Bridging Mechatronics and AI</h2>
+<div class="space-y-4 text-slate-400 leading-relaxed text-lg">
+<p>
+            With a background in <span class="text-white font-semibold">mechatronics</span> and a passion for AI, I bridge the gap between complex hardware and intelligent software. 
+          </p>
+<p>
+            I specialize in building serverless architectures and machine learning models that solve real-world problems. My approach is rooted in engineering precision and driven by creative problem-solving.
+          </p>
+</div>
+</div>
+<div class="glass-card rounded-3xl p-8 relative overflow-hidden group ai-glow">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl">precision_manufacturing</span>
+</div>
+<div class="relative z-10 space-y-6">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">psychology</span>
+            The Philosophy
+          </h3>
+<p class="italic text-slate-300">
+            "Software shouldn't just exist; it should evolve. I build systems that are not only functional but resilient and future-proof."
+          </p>
+<div class="flex items-center gap-4 pt-4 border-t border-white/5">
+<div class="text-center flex-1">
+<div class="text-2xl font-black text-white">5+</div>
+<div class="text-xs text-slate-500 uppercase">Years Exp</div>
+</div>
+<div class="w-px h-8 bg-white/10"></div>
+<div class="text-center flex-1">
+<div class="text-2xl font-black text-white">12+</div>
+<div class="text-xs text-slate-500 uppercase">Projects</div>
+</div>
+<div class="w-px h-8 bg-white/10"></div>
+<div class="text-center flex-1">
+<div class="text-2xl font-black text-white">100%</div>
+<div class="text-xs text-slate-500 uppercase">Uptime Goal</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section -->
+<section class="space-y-12">
+<div class="text-center space-y-4">
+<h2 class="text-3xl font-bold">Technical Arsenal</h2>
+<p class="text-slate-400">Tools and frameworks I use to bring ideas to life</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Backend -->
+<div class="glass-card p-6 rounded-2xl border-t-2 border-t-primary/40">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<h3 class="font-bold">Backend &amp; Logic</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Python</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">FastAPI</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Node.js</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">PostgreSQL</span>
+</div>
+</div>
+<!-- AI/ML -->
+<div class="glass-card p-6 rounded-2xl border-t-2 border-t-blue-400/40">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">neurology</span>
+</div>
+<h3 class="font-bold">AI &amp; Machine Learning</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">TensorFlow</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">PyTorch</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">LangChain</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Scikit-learn</span>
+</div>
+</div>
+<!-- Infrastructure -->
+<div class="glass-card p-6 rounded-2xl border-t-2 border-t-indigo-400/40">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-10 rounded-lg bg-indigo-400/10 flex items-center justify-center text-indigo-400">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<h3 class="font-bold">Cloud &amp; DevOps</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">AWS Lambda</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Docker</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Terraform</span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 text-sm font-medium border border-white/5">Serverless</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Section -->
+<section class="space-y-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-2">
+<h2 class="text-3xl font-bold">Featured Projects</h2>
+<p class="text-slate-400">Recent work in AI and System Architecture</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-1 hover:underline" href="#">
+          View all on GitHub <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Project 1 -->
+<div class="group glass-card rounded-3xl overflow-hidden hover:border-primary/30 transition-all">
+<div class="aspect-video bg-slate-800 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Screenshot of Face and Food recognition app dashboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpBLrtzqsDu3Ot2DTHoZL88Jl4iCV7OOxPOi2vt9tjZmeWTFey7pvSvmJ202qrJTpr1KsiieI7kEetI5DIXO0gXSepCzD2TqzuFshlC6i83bn9mO12A6uduXIoHDCyLHF8j2c7wgLuMCdBfSdvZUzJtlB741W6swZYz9tCaEABTHRtkqautAFZxxqa_z0lkHGaxsz6AotO53K6U8JaL8y7coC3X1o8hfvf-iJEvY-0UbyWaoeV0TjuZpD0ZurjcaSMtI9qLLMkLezC"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex items-start justify-between">
+<h3 class="text-xl font-bold">Face &amp; Food Recognition</h3>
+<div class="flex gap-2">
+<a class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-300" href="#">
+<svg class="size-5 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>
+</a>
+</div>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">
+              Real-time computer vision system capable of identifying dietary components and user biometric profiles with 98% accuracy.
+            </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">OpenCV</span>
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">TensorFlow</span>
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">AWS</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group glass-card rounded-3xl overflow-hidden hover:border-primary/30 transition-all">
+<div class="aspect-video bg-slate-800 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Architecture diagram of an LLM orchestrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrc10woWTBHphUq_GJUnDm5Mcfp_pdSvHcCAPlOUHVV4OjC5eQ0Z_nHbca8rO2kpgNdX4lBgVDN7Cm4c2TJ29RtZ3jVBamqGsWuLtkE3LRnB_M3JkJp6dTpmRT1wm4Ki7su1bcd-qtnZ1BE5KMd-juUvZVdBOIDknN6Uqy8b-Ltap0NZqrzz685vjCPNznmRrocYgOGeXp3yrKpTsjvEHkBzgEPNeC1pbMshARDTRJ0nZLX4-LGTo0B2TpHCq1tqdD6tKWfHlHMwre"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex items-start justify-between">
+<h3 class="text-xl font-bold">StrataRAG Orchestrator</h3>
+<div class="flex gap-2">
+<a class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-300" href="#">
+<svg class="size-5 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>
+</a>
+</div>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">
+              Advanced Retrieval-Augmented Generation pipeline for enterprise documentation, featuring multi-layered filtering and semantic routing.
+            </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">LangChain</span>
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">FastAPI</span>
+<span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 uppercase">VectorDB</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Personality Spotlight -->
+<section class="relative">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-[40px] blur-3xl opacity-30"></div>
+<div class="glass-card rounded-[40px] p-8 md:p-16 relative overflow-hidden flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
+<div class="size-48 md:size-64 rounded-3xl rotate-6 overflow-hidden border-8 border-white/5 bg-slate-800 shadow-2xl flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Carlos working in a casual studio environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVm3ILjFtaEQIn1MIUb93d5DFpeZeIFdYwyY1MOQvq1h1zNtDOBjqF25B_uJoMT-pBpP6u_wW2wQV-PowU4vCdSKm1og_gfXhChpl1298U2f6GAq6X86dRiogyzCap895VpmCluOJiLbifP7bnC8GKn7JJQCZmpOIUQs27zZHd5zN7bZee2ocrZj6ULpCE4B8nBi_IQUuN221FHOGLPpftBMS5cqQX5QDiXVvc2ixL3dc3Xt9PqLEPbw_5Ncs3t-IE5_nGqK66OZiG"/>
+</div>
+<div class="space-y-6">
+<h2 class="text-3xl font-bold">The Developer Behind the Code</h2>
+<p class="text-lg text-slate-300 leading-relaxed">
+            I believe that great engineering starts with a great environment. I bring a <span class="text-primary font-bold">relaxed, motivated, and welcoming energy</span> to every team I join. Whether we're debugging a tricky race condition or architecting a new ML pipeline, I'm the one ensuring we keep moving forward with a smile and a solution.
+          </p>
+<div class="flex flex-wrap gap-4 justify-center md:justify-start">
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-sm">
+<span class="material-symbols-outlined text-green-400 text-sm">coffee</span> Coffee Enthusiast
+            </div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-sm">
+<span class="material-symbols-outlined text-blue-400 text-sm">group</span> Collaborative Spirit
+            </div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-sm">
+<span class="material-symbols-outlined text-purple-400 text-sm">rocket_launch</span> Solution Oriented
+            </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact CTA -->
+<section class="pb-12" id="contact">
+<div class="max-w-2xl mx-auto glass-card rounded-3xl p-8 md:p-12 text-center space-y-8 border-2 border-primary/20">
+<h2 class="text-3xl font-bold">Ready to build something amazing?</h2>
+<p class="text-slate-400">Currently open to new opportunities and interesting AI projects. Let's talk about how I can help your team.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-10 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3" href="mailto:hello@carlostamayo.dev">
+<span class="material-symbols-outlined">send</span> Send an Email
+          </a>
+<div class="flex gap-4 justify-center">
+<a class="size-14 glass-card rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors" href="#">
+<svg class="size-6 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+<a class="size-14 glass-card rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors" href="#">
+<svg class="size-6 fill-current" viewbox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background-dark/80 backdrop-blur-xl border-t border-white/5 px-6 pb-6 pt-3">
+<div class="flex items-center justify-between">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Work</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">About</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Contact</span>
+</a>
+</div>
+</nav>
+<footer class="bg-background-dark border-t border-white/5 py-12 px-4 text-center">
+<div class="max-w-5xl mx-auto space-y-4">
+<div class="font-bold text-lg">Carlos Tamayo</div>
+<p class="text-slate-500 text-sm">© 2024 AI Developer Portfolio. Built with passion &amp; Python.</p>
+</div>
+</footer>
+</body></html>
